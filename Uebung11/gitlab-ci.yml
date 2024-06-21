@@ -1,0 +1,24 @@
+stages:
+  - test
+  - build
+
+variables:
+  PROJECT_DIR: "./Uebung11"
+
+
+test:
+  image: gradle:8.7.0-jdk21
+  stage: test
+  script:
+    - cd $PROJECT_DIR
+    - gradle test
+
+build:
+  image: gradle:8.7.0-jdk21
+  stage: build
+  script:
+    - cd $PROJECT_DIR
+    - gradle assemble
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: always
